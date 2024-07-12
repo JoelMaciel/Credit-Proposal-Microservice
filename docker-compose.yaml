@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres_proposal:
+    image: postgres
+    container_name: postgres-proposal
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      POSTGRES_DB: proposaldb
+      POSTGRES_USER: viana
+      POSTGRES_PASSWORD: docker123
+    ports:
+      - "5433:5432"
+    networks:
+      - proposal-network
+
+
+networks:
+  proposal-network:
+    driver: bridge
+
