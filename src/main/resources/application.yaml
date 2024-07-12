@@ -17,3 +17,6 @@ spring:
         jdbc:
           lob.non-contextual-creation: true
     show-sql: true
+    flyway:
+      locations: classpath:db/migration, classpath:db/testdb
+      baselineOnMigrate: true
