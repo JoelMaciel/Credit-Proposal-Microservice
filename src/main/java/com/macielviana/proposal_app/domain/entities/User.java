@@ -1,12 +1,15 @@
 package com.macielviana.proposal_app.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -18,6 +21,7 @@ public class User {
     private String name;
     private String lastName;
     private String cpf;
+    private String phoneNumber;
     private Double income;
 
     @OneToMany(mappedBy = "user")

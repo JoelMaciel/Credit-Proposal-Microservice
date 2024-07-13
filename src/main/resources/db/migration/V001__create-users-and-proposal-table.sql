@@ -2,8 +2,9 @@ CREATE TABLE USERS (
     user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(30) NOT NULL,
     last_name VARCHAR(40) NOT NULL,
-    cpf VARCHAR(11) UNIQUE NOT NULL,
-    income NUMERIC(10,2) NOT NULL
+    cpf VARCHAR(15) UNIQUE NOT NULL,
+    income NUMERIC(10,2) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE PROPOSAL (
