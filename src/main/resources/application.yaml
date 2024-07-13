@@ -22,6 +22,15 @@ spring:
       - classpath:db/migration
       - classpath:db/testdb
     baselineOnMigrate: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  proposal-pending:
+    exchange: proposal-pending-exchange
 
 logging:
   level:
