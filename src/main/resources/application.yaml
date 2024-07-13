@@ -28,6 +28,10 @@ spring:
     username: guest
     password: guest
 
+rabbitmq:
+  proposal-pending:
+    exchange: proposal-pending-exchange
+
 logging:
   level:
     com.macielviana.proposal: TRACE
