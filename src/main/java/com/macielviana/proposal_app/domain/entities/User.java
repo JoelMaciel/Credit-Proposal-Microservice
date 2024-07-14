@@ -1,5 +1,6 @@
 package com.macielviana.proposal_app.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,5 +26,6 @@ public class User {
     private Double income;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Proposal> proposals;
 }

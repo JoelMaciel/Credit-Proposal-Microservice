@@ -1,13 +1,12 @@
 package com.macielviana.proposal_app.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,12 +26,8 @@ public class Proposal {
     private boolean integrated;
     private String observation;
 
-    @CreationTimestamp
-    private OffsetDateTime dateProposal;
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
-
-
 }
