@@ -26,8 +26,8 @@ public class ProposalDTO implements Serializable {
     private Double income;
     private Double amountRequested;
     private int paymentDeadline;
+    private boolean integrated;
     private Boolean approved;
     private String observation;
-    private OffsetDateTime dateProposal;
 
 }

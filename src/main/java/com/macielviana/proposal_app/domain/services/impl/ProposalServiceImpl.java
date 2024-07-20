@@ -5,7 +5,7 @@ import com.macielviana.proposal_app.domain.dtos.ProposalRequestDTO;
 import com.macielviana.proposal_app.domain.entities.Proposal;
 import com.macielviana.proposal_app.domain.mapper.ProposalMapper;
 import com.macielviana.proposal_app.domain.repositories.ProposalRepository;
-import com.macielviana.proposal_app.domain.services.NotificationService;
+import com.macielviana.proposal_app.domain.services.NotificationRabbitmqService;
 import com.macielviana.proposal_app.domain.services.ProposalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProposalServiceImpl implements ProposalService {
 
     private final ProposalRepository proposalRepository;
-    private final NotificationService notificationService;
+    private final NotificationRabbitmqService notificationRabbitmqService;
 
     @Value("${rabbitmq.proposal-pending.exchange}")
     private String exchange;
@@ -28,18 +28,28 @@ public class ProposalServiceImpl implements ProposalService {
     @Override
     public ProposalDTO create(ProposalRequestDTO proposalRequestDTO) {
         Proposal proposal = ProposalMapper.INSTANCE.toEntity(proposalRequestDTO);
+
         proposalRepository.save(proposal);
 
-        ProposalDTO proposalDTO = ProposalMapper.INSTANCE.toDTO(proposal);
+        notification(proposal);
 
-        notificationService.notification(proposalDTO, exchange);
-
-        return proposalDTO;
+        return ProposalMapper.INSTANCE.toDTO(proposal);
     }
 
     @Override
     public Page<ProposalDTO> getAll(Pageable pageable) {
         Page<Proposal> proposals = proposalRepository.findAll(pageable);
         return ProposalMapper.INSTANCE.toDTOPage(proposals);
+    }
+
+    @Override
+    public void notification(Proposal proposal) {
+        try {
+            notificationRabbitmqService.notificationRabbitmq(proposal, exchange);
+        } catch (RuntimeException exception) {
+            proposal.setIntegrated(false);
+            proposalRepository.save(proposal);
+
+        }
     }
 }
