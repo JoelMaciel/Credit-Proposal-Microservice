@@ -23,9 +23,8 @@ public interface ProposalMapper {
     @Mapping(target = "user.income", source = "income")
     @Mapping(target = "proposalId", ignore = true)
     @Mapping(target = "approved", ignore = true)
-    @Mapping(target = "integrated", ignore = true)
+    @Mapping(target = "integrated", constant = "true")
     @Mapping(target = "observation", ignore = true)
-    @Mapping(target = "dateProposal", ignore = true)
     Proposal toEntity(ProposalRequestDTO proposalRequestDTO);
 
     @Mapping(target = "name", source = "user.name")
@@ -33,7 +32,7 @@ public interface ProposalMapper {
     @Mapping(target = "phoneNumber", source = "user.phoneNumber")
     @Mapping(target = "cpf", source = "user.cpf")
     @Mapping(target = "income", source = "user.income")
-    @Mapping(target = "dateProposal", source = "dateProposal")
+    @Mapping(target = "integrated", constant = "true")
     ProposalDTO toDTO(Proposal proposal);
 
     default Page<ProposalDTO> toDTOPage(Page<Proposal> proposals) {
